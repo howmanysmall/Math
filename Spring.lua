@@ -27,7 +27,6 @@ local pi = math.pi
 local exp = math.exp
 local sin = math.sin
 local cos = math.cos
-local sqrt = math.sqrt
 
 local EPS = 1e-4
 
@@ -93,7 +92,7 @@ function Spring:Update(dt)
 		p1 = (offset * (1 + f * dt) + v0 * dt) * decay + g
 		v1 = (v0 * (1 - f * dt) - offset * (f * f * dt)) * decay
 	elseif d < 1 then -- Underdamped
-		local c = sqrt(1 - d * d)
+		local c = (1 - d * d) ^ 0.5
 
 		local i = cos(f * c * dt)
 		local j = sin(f * c * dt)
@@ -136,7 +135,7 @@ function Spring:Update(dt)
 		p1 = (offset * (i + d * z) + v0 * y) * decay + g
 		v1 = (v0 * (i - z * d) - offset * (z * f)) * decay
 	else -- Overdamped
-		local c = sqrt(d * d - 1)
+		local c = (d * d - 1) ^ 0.5
 
 		local r1 = -f * (d - c)
 		local r2 = -f * (d + c)
